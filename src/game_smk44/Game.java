@@ -44,8 +44,7 @@ public class Game extends Parent {
 	
 	protected FighterPlane user;
 	protected ArrayList<EnemyPlane> enemies;
-	protected ArrayList<Projectile> bullets; 
-	protected ArrayList<EnemyProjectile> enemyBullets; 
+	protected ArrayList<Projectile> bullets;  
 	protected ArrayList<ImageView> hearts;
 	protected int kills;
 	protected int lives;
@@ -103,7 +102,7 @@ public class Game extends Parent {
 	        	// Cheat Codes
 	        	if (kc == KeyCode.L) lives = 0; // lose game automatically
 	        	if (kc == KeyCode.ESCAPE) Platform.exit(); // Close game window
-	        	if (kc == KeyCode.N) goToLevelTwo();
+	        	if (kc == KeyCode.N) goToLevelTwo(); // go to level two
 	        }
 	    });
 	    background.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -139,7 +138,6 @@ public class Game extends Parent {
 		hearts = new ArrayList<ImageView>();
 		enemies = new ArrayList<EnemyPlane>();
 		bullets = new ArrayList<Projectile>();
-		enemyBullets = new ArrayList<EnemyProjectile>();
 		createUser();
 		createEnemies();	
 	}
@@ -191,45 +189,43 @@ public class Game extends Parent {
 		}
 		bullets.removeAll(toRemove);
 		group.getChildren().removeAll(toRemove);
-		moveEnemyBullets();
 	}
 	
-	protected void moveEnemyBullets() {
-		ArrayList<Projectile> toRemove = new ArrayList<Projectile>();
-		for (Projectile enemyFire : enemyBullets) {
-			enemyFire.setTranslateX(enemyFire.getTranslateX() + enemyFire.getVelocity());
-			if (enemyFire.getTranslateX() > Main.getScreenWidth()) toRemove.add(enemyFire);
+	protected void moveEnemies() {
+		for (EnemyPlane enemy : enemies) {
+			enemy.setTranslateX(enemy.getTranslateX() + enemy.getSteps());
 		}
-		enemyBullets.removeAll(toRemove);
-		group.getChildren().removeAll(toRemove);
 	}
-	
+		
 	protected void checkBulletCollisions() {
 		ArrayList<Projectile> toRemove = new ArrayList<Projectile>();
 		for (Projectile bullet : bullets) {
-			for (EnemyPlane enemy : enemies) {
-				if (bullet.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
-					kills++;
-					toRemove.add(bullet);
-					respawnEnemy(enemy);
-				}
+			if (bullet.getClass() == EnemyProjectile.class) {
+				handleEnemyBulletCollision(toRemove, bullet);
+			}
+			else {
+				handleUserBulletCollision(toRemove, bullet);
 			}
 		}
 		bullets.removeAll(toRemove);
 		group.getChildren().removeAll(toRemove);
-		checkEnemyBulletCollisions();
 	}
 	
-	protected void checkEnemyBulletCollisions() {
-		ArrayList<EnemyProjectile> toRemoveEnemy = new ArrayList<EnemyProjectile>();
-		for (EnemyProjectile bullet : enemyBullets) {
-			if (bullet.getBoundsInParent().intersects(user.getBoundsInParent())) {
-				toRemoveEnemy.add(bullet);
-				removeHeart();
+	protected void handleUserBulletCollision(ArrayList<Projectile> toRemove, Projectile bullet) {
+		for (EnemyPlane enemy : enemies) {
+			if (bullet.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+				kills++;
+				toRemove.add(bullet);
+				respawnEnemy(enemy);
 			}
 		}
-		enemyBullets.removeAll(toRemoveEnemy);
-		group.getChildren().removeAll(toRemoveEnemy);
+	}
+	
+	protected void handleEnemyBulletCollision(ArrayList<Projectile> toRemove, Projectile bullet) {
+		if (bullet.getBoundsInParent().intersects(user.getBoundsInParent())) {
+			toRemove.add(bullet);
+			removeHeart();
+		}
 	}
 	
 	protected void createEnemies() {
@@ -251,13 +247,7 @@ public class Game extends Parent {
 		}
 
 	}
-	
-	protected void moveEnemies() {
-		for (EnemyPlane enemy : enemies) {
-			enemy.setTranslateX(enemy.getTranslateX() + enemy.getSteps());
-		}
-	}
-	
+		
 	protected void handleEnemyPenetration() {
 		for (EnemyPlane enemy : enemies) {
 			if (Math.abs(enemy.getTranslateX()) > Main.getScreenWidth()) {
@@ -276,7 +266,7 @@ public class Game extends Parent {
 			// 1 IN 250 CHANCE ENEMY FIRES
 			if (r.nextInt(ENEMY_FIRE_PROB) == 1 ) {
 				EnemyProjectile ep = new EnemyProjectile(enemy);		
-				enemyBullets.add(ep);
+				bullets.add(ep);
 				group.getChildren().add(ep);
 			} 
 		}
