@@ -30,7 +30,6 @@ public class GameLevelTwo extends Game {
 	
 	private int bossHealth;
 	private BossPlane boss;
-	private ArrayList<BossProjectile> bossProjectiles;
 	private ImageView winScreen; 
 	private ImageView shieldImage;
 
@@ -44,7 +43,6 @@ public class GameLevelTwo extends Game {
             	moveUser();  
             	moveEnemies();
             	moveBullets();
-            	moveBossBullets();
             	generateEnemyFire();
             	manageBossShield();
             	checkBulletCollisions();
@@ -65,7 +63,6 @@ public class GameLevelTwo extends Game {
 		r = new Random();
 		hearts = new ArrayList<ImageView>();
 		bullets = new ArrayList<Projectile>();
-		bossProjectiles = new ArrayList<BossProjectile>();
 	}
 	
 	private void initBoss() {
@@ -159,41 +156,39 @@ public class GameLevelTwo extends Game {
     private void generateBossFire() {
     	double curPos = boss.getLayoutY() + boss.getTranslateY();
     	BossProjectile bp = new BossProjectile(curPos);
-    	bossProjectiles.add(bp);
+    	bullets.add(bp);
     	group.getChildren().add(bp);
     }
-    
-    private void moveBossBullets() {
-    	ArrayList<BossProjectile> toRemove = new ArrayList<BossProjectile>();
-    	for (BossProjectile bullet : bossProjectiles) {
-    		bullet.setTranslateX(bullet.getTranslateX() + bullet.getVelocity());
-			if (bullet.getTranslateX() > Main.getScreenWidth()) toRemove.add(bullet);
-    	}
-    	bossProjectiles.removeAll(toRemove);
-    	group.getChildren().removeAll(toRemove);
-    }
-    
+        
     @Override
     protected void checkBulletCollisions() {
 		ArrayList<Projectile> toRemove = new ArrayList<Projectile>();
-		ArrayList<BossProjectile> toRemoveEnemy = new ArrayList<BossProjectile>();
 		for (Projectile bullet : bullets) {
-			if (bullet.getBoundsInParent().intersects(boss.getBoundsInParent())) {
-				if (!boss.isShielded()) bossHealth--;
-				toRemove.add(bullet);
-				System.out.println("Boss Health: " + bossHealth);
+			if (bullet.getClass() == BossProjectile.class) {
+				handleEnemyBulletCollision(toRemove, bullet);
 			}
-		}
-		for (BossProjectile bullet : bossProjectiles) {
-			if (bullet.getBoundsInParent().intersects(user.getBoundsInParent())) {
-				toRemoveEnemy.add(bullet);
-				removeHeart();
+			else {
+				handleUserBulletCollision(toRemove, bullet);
 			}
 		}
 		bullets.removeAll(toRemove);
 		group.getChildren().removeAll(toRemove);
-		bossProjectiles.removeAll(toRemoveEnemy);
-		group.getChildren().removeAll(toRemoveEnemy);
+    }
+    
+    @Override
+    protected void handleUserBulletCollision(ArrayList<Projectile> toRemove, Projectile bullet) {
+		if (bullet.getBoundsInParent().intersects(boss.getBoundsInParent())) {
+			if (!boss.isShielded()) bossHealth--;
+			toRemove.add(bullet);
+		}
+    }
+    
+    @Override
+    protected void handleEnemyBulletCollision(ArrayList<Projectile> toRemove, Projectile bullet) {
+    	if (bullet.getBoundsInParent().intersects(user.getBoundsInParent())) {
+			toRemove.add(bullet);
+			removeHeart();
+		}
     }
     
     @Override
@@ -206,7 +201,7 @@ public class GameLevelTwo extends Game {
 		bullets.removeAll(toRemove);
 		group.getChildren().removeAll(toRemove);
     }
-    
+        
     private void manageBossShield() {
     	if (boss.isShielded()) {
     		int curFrames = boss.getCurrentFramesWithShield();
