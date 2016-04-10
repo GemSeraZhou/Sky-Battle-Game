@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 
 public class LoadScreen extends Parent {
 	
-	ImageView background;
+	private ImageView background;
 
 	public LoadScreen() {
 		background = new ImageView();

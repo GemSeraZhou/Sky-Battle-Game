@@ -10,7 +10,6 @@ public class EnemyPlane extends FighterPlane {
 	public EnemyPlane() {
 		initializeImage();
 		steps = -6;
-		
 	}
 	
 	@Override
