@@ -19,7 +19,7 @@ public class Main extends Application {
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		ImageSetUp.initialize();
 		Group root = new Group();
-		Scene scene = new Scene(root);
+		Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
