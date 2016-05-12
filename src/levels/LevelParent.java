@@ -6,19 +6,15 @@ import java.util.Observable;
 import java.util.stream.Collectors;
 
 import actors.ActiveActorDestructible;
-import actors.EnemyPlane;
 import actors.FighterPlane;
 import actors.UserPlane;
-import controller.Controller;
-import controller.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
@@ -27,22 +23,21 @@ import view.GameOverImage;
 public abstract class LevelParent extends Observable {
 
 	private static final int MILLISECOND_DELAY = 17;
+	private final double screenHeight;
+	private final double screenWidth;
 
 	private Group root;
 	private Timeline timeline;
 	private UserPlane user;
 	private Scene scene;
 	private ImageView background;
-	private final double screenHeight;
-	private final double screenWidth;
-	private int totalEnemies;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-	public LevelParent(Image backgroundImage, double screenHeight, double screenWidth, int totalEnemies) {
+	public LevelParent(Image backgroundImage, double screenHeight, double screenWidth) {
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -50,7 +45,6 @@ public abstract class LevelParent extends Observable {
 		this.background = new ImageView(backgroundImage);
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.totalEnemies = totalEnemies;
 		initializeUser();
 		initializeTimeline();
 	}
@@ -60,10 +54,6 @@ public abstract class LevelParent extends Observable {
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		initializeBackground();
 		initializeFriendlyUnits();
-//		background.setLayoutX(100.0);
-//		background.setLayoutY(-300.0);
-//		System.out.println(background.getLayoutX());
-//		System.out.println(background.getLayoutY());
 		return scene;
 	}
 
@@ -88,6 +78,7 @@ public abstract class LevelParent extends Observable {
 		handleProjectileCollisions(enemyUnits, userProjectiles);
 		handleProjectileCollisions(friendlyUnits, enemyProjectiles);
 		handlePlaneCollisions();
+		removeAllDestroyedActors();
 		checkIfGameOver();
 	}
 	
@@ -137,7 +128,9 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void fireProjectile() {
-		root.getChildren().add(user.fireProjectile());
+		ActiveActorDestructible projectile = user.fireProjectile();
+		root.getChildren().add(projectile);
+		userProjectiles.add(projectile);
 	}
 
 	protected void generateEnemyFire() {

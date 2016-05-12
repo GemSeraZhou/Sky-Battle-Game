@@ -3,8 +3,6 @@ package controller;
 import java.lang.reflect.InvocationTargetException;
 
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -18,13 +16,10 @@ public class Main extends Application {
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		ImageSetUp.initialize();
-		Group root = new Group();
-		Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
 		stage.setWidth(SCREEN_WIDTH);
-		stage.setScene(scene);
 		myController = new Controller(stage);
 		myController.launchGame();
 	}
