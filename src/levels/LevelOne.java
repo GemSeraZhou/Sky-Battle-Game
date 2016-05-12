@@ -9,17 +9,13 @@ import javafx.scene.image.Image;
 public class LevelOne extends LevelParent {
 	
 	private static final String NEXT_LEVEL = "LevelTwo";
-	private static final int TOTAL_ENEMIES = 1;
+	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 100;
-	private static final double ENEMY_SPAWN_PROBABILITY = .50;
+	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final Image BACKGROUND_IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBackground1());
-	private double screenHeight;
-	private double screenWidth;
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE, screenHeight, screenWidth);
-		this.screenHeight = screenHeight;
-		this.screenWidth = screenWidth;
 	}
 
 	@Override
@@ -49,9 +45,9 @@ public class LevelOne extends LevelParent {
 	protected void spawnEnemyUnits() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-			if (Math.random() > ENEMY_SPAWN_PROBABILITY) {
-				double newEnemyInitialYPosition = Math.random() * screenHeight;
-				ActiveActorDestructible newEnemy = new EnemyPlane(screenWidth, newEnemyInitialYPosition);
+			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
+				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
+				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
 		}

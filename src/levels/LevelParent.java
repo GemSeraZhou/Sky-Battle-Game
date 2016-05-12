@@ -18,6 +18,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
+import jdk.nashorn.internal.ir.EmptyNode;
 import view.GameOverImage;
 
 public abstract class LevelParent extends Observable {
@@ -25,6 +26,7 @@ public abstract class LevelParent extends Observable {
 	private static final int MILLISECOND_DELAY = 17;
 	private final double screenHeight;
 	private final double screenWidth;
+	private final double enemyMaximumYPosition;
 
 	private Group root;
 	private Timeline timeline;
@@ -45,6 +47,7 @@ public abstract class LevelParent extends Observable {
 		this.background = new ImageView(backgroundImage);
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
+		this.enemyMaximumYPosition = screenHeight - 150;
 		initializeUser();
 		initializeTimeline();
 	}
@@ -222,6 +225,14 @@ public abstract class LevelParent extends Observable {
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
+	}
+	
+	protected double getEnemyMaximumYPosition() {
+		return enemyMaximumYPosition;
+	}
+	
+	protected double getScreenWidth() {
+		return screenWidth;
 	}
 
 }
