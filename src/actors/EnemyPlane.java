@@ -10,7 +10,7 @@ public class EnemyPlane extends FighterPlane {
 	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getEnemyPlane());
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
-	private static final double INITIAL_HEALTH = 1.0;
+	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
 
 	public EnemyPlane(double initialXPos, double initialYPos) {

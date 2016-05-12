@@ -3,7 +3,7 @@ package actors;
 import controller.ImageSetUp;
 import javafx.scene.image.Image;
 
-public class UserProjectile extends ActiveActorDestructible {
+public class UserProjectile extends Projectile {
 
 	private static final int IMAGE_HEIGHT = 125;
 	private static final int HORIZONTAL_VELOCITY = 15;

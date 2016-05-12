@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 public class HeartDisplay {
 	
 	private static final int HEART_HEIGHT = 50;
+	private static final int INDEX_OF_FIRST_ITEM = 0;
 	private HBox container;
 	private double containerXPosition;
 	private double containerYPosition;
@@ -33,6 +34,11 @@ public class HeartDisplay {
 			heart.setPreserveRatio(true);
 			container.getChildren().add(heart);
 		}
+	}
+	
+	public void removeHeart() {
+		if (!container.getChildren().isEmpty())
+			container.getChildren().remove(INDEX_OF_FIRST_ITEM);
 	}
 	
 	public HBox getContainer() {

@@ -14,13 +14,12 @@ public class UserPlane extends FighterPlane {
 	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getUserPlane());
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private static final int INITIAL_HEALTH = 5;
 	private int velocityMultiplier;
 	private int numberOfKills;
 	
 	
-	public UserPlane() {
-		super(IMAGE, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, INITIAL_HEALTH);
+	public UserPlane(int initialHealth) {
+		super(IMAGE, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 	}
 	
