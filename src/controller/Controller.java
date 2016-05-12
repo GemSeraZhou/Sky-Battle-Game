@@ -1,63 +1,51 @@
 package controller;
 
-import javafx.scene.Group;
-import levels.Level;
-import levels.LevelTwo;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Controller {
-	
-	private Group root;
-	
-	// Screen ID's
-	private static final int LOAD_SCREEN = 0;
-	private static final int LEVEL_ONE = 1;
-	private static final int LEVEL_TWO = 2;
-	
-	private LoadScreen myLoadScreen;
-	private Level myGame;
-	private Level myGameLevelTwo;
-	
-	public Controller(Group root) {
-		this.root = root;
-	}
-	
-	public void launchGame() {
-		switchScreens(LEVEL_ONE);
-	}
-	
-	public void switchScreens(int newScreenID) {
-		if (newScreenID == LOAD_SCREEN) {
-			myLoadScreen = new LoadScreen();
-			root.getChildren().add(myLoadScreen);
-			myLoadScreen.start();
-		}
-		if (newScreenID == LEVEL_ONE) {
-			root.getChildren().remove(myLoadScreen);
-			myLoadScreen = null;
-			myGame = new Level();
-			root.getChildren().add(myGame);
-			myGame.start();
-		}
-		if (newScreenID == LEVEL_TWO) {
-			root.getChildren().remove(myGame);
-			myGame = null;
-			myGameLevelTwo = new LevelTwo();
-			root.getChildren().add(myGameLevelTwo);
-			myGameLevelTwo.start();			
-		}
-		
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import levels.LevelParent;
+
+public class Controller implements Observer {
+
+	private Stage stage;
+
+	public Controller(Stage stage) {
+		this.stage = stage;
 	}
 
-	public int getLoadScreenCode() {
-		return LOAD_SCREEN;
+	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		stage.show();
+		goToLevel("levels.LevelOne");
 	}
-	
-	public int getLevelOneCode() {
-		return LEVEL_ONE;
+
+	private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> myClass = Class.forName(className);
+		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
+		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getWidth(), stage.getHeight());
+		Scene scene = myLevel.initializeScene();
+		stage.setScene(scene);
+		myLevel.startGame();
 	}
-	
-	public int getLevelTwoCode() {
-		return LEVEL_TWO;
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		try {
+			goToLevel((String) arg1);
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
+				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText(e.getClass().toString());
+			alert.show();
+		}
 	}
 
 }

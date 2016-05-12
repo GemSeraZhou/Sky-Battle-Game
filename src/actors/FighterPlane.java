@@ -1,57 +1,35 @@
 package actors;
 
-import controller.ImageSetUp;
-import controller.Main;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
-public class FighterPlane extends Parent {
-	
-	protected ImageView imageView;	
-	protected int steps;
-	protected int speed;
-	private static final int PLANE_X_POS = 5;
-	private static final int PLANE_Y_POS = Main.getScreenHeight()/2 - 60;
-	private static final int PLANE_HEIGHT = 150;
-	private static final int PLANE_WIDTH = 200;
-	private static final int BULLET_X_POS = 110;
-	private static final int BULLET_Y_POS_ADJUST = 20;
-	
+public abstract class FighterPlane extends ActiveActorDestructible {
 
+	private double health;
+	
+	public FighterPlane(Image image, int imageHeight, double initialXPos, double initialYPos, double health) {
+		super(image, imageHeight, initialXPos, initialYPos);
+		this.health = health;
+	}
 
-	public FighterPlane() {
-		initializeImage();
-		this.setLayoutX(PLANE_X_POS);
-		this.setLayoutY(PLANE_Y_POS);	
-		steps = 0;
-		speed = 8;
+	public abstract ActiveActorDestructible fireProjectile();
+	
+	public void takeDamage() {
+		health--;
+		if (healthAtZero()) {
+			this.destroy();
+		}
 	}
 	
-	protected void initializeImage() {
-		imageView = new ImageView();
-		imageView.setImage(ImageSetUp.getImageList().get(ImageSetUp.getUserPlane()));
-		imageView.setFitHeight(PLANE_HEIGHT);
-		imageView.setFitWidth(PLANE_WIDTH);
-		getChildren().add(imageView);
+	protected double getProjectileXPosition(double xPositionOffset) {
+		return getLayoutX() + getTranslateX() + xPositionOffset;
 	}
 	
-	public Projectile fire(double yCoor) {
-		Projectile p = new Projectile();
-		p.setTranslateX(BULLET_X_POS);
-		p.setTranslateY(yCoor + BULLET_Y_POS_ADJUST);
-		return p;
+	protected double getProjectileYPosition(double yPositionOffset) {
+		return getLayoutY() + getTranslateY() + yPositionOffset;
 	}
 	
-	public int getSteps() {
-		return steps;
+	private boolean healthAtZero() {
+		return health == 0;
 	}
-	
-	public void setSteps(int numSteps) {
-		steps = numSteps;
-	}
-	
-	public int getSpeed() {
-		return speed;
-	}
-	
+		
 }
