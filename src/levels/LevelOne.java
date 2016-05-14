@@ -2,10 +2,16 @@ package levels;
 
 import actors.ActiveActorDestructible;
 import actors.EnemyPlane;
-import controller.ImageSetUp;
 import javafx.scene.image.Image;
+import view.ImageSetUp;
 import view.LevelView;
 
+/**
+ * Level One of Sky Battle
+ * 
+ * @author Stephen
+ *
+ */
 public class LevelOne extends LevelParent {
 	
 	private static final String NEXT_LEVEL = "levels.LevelTwo";
@@ -15,6 +21,11 @@ public class LevelOne extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private static final Image BACKGROUND_IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBackground1());
 
+	/**
+	 * Creates an instance of LevelOne
+	 * @param screenHeight: height of the screen
+	 * @param screenWidth: width of the screen
+	 */
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
@@ -50,6 +61,10 @@ public class LevelOne extends LevelParent {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 	
+	/**
+	 * @return true if user has accumulated number of kills needed to advance to next level;
+	 * false otherwise 
+	 */
 	private boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}

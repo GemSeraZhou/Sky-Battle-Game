@@ -1,7 +1,7 @@
 package actors;
 
-import controller.ImageSetUp;
 import javafx.scene.image.Image;
+import view.ImageSetUp;
 
 public class EnemyPlane extends FighterPlane {
 
@@ -27,7 +27,7 @@ public class EnemyPlane extends FighterPlane {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyFire(projectileXPosition, projectileYPostion);
+			return new EnemyProjectile(projectileXPosition, projectileYPostion);
 		}
 		return null;
 	}

@@ -1,14 +1,20 @@
 package actors;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import controller.ImageSetUp;
 import javafx.scene.image.Image;
+import view.ImageSetUp;
 
+/**
+ * 
+ * The boss for Level Two of Sky Battle Game
+ * 
+ * @author Stephen
+ *
+ */
 public class Boss extends FighterPlane {
 
+	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBossPlane());
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
@@ -23,13 +29,15 @@ public class Boss extends FighterPlane {
 	private static final int Y_POSITION_UPPER_BOUND = -100;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 500;
-	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBossPlane());
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
 
+	/**
+	 * Creates an instance of Boss
+	 */
 	public Boss() {
 		super(IMAGE, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
@@ -58,7 +66,7 @@ public class Boss extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossFire(getProjectileInitialPosition()) : null;
+		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
 	}
 	
 	@Override
@@ -68,6 +76,9 @@ public class Boss extends FighterPlane {
 		}
 	}
 
+	/**
+	 * Initializes the boss' pattern of movement
+	 */
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(VERTICAL_VELOCITY);
@@ -77,12 +88,20 @@ public class Boss extends FighterPlane {
 		Collections.shuffle(movePattern);
 	}
 	
+	/**
+	 * Updates the boss' shielding
+	 */
 	private void updateShield() {
 		if (isShielded) framesWithShieldActivated++;
 		else if (shieldShouldBeActivated()) activateShield();	
 		if (shieldExhausted()) deactivateShield();
 	}
 	
+	/**
+	 * Gets the value of the boss' next move
+	 * 
+	 * @return: the value of the boss' next move
+	 */
 	private int getNextMove() {
 		int currentMove = movePattern.get(indexOfCurrentMove);
 		consecutiveMovesInSameDirection++;
@@ -97,26 +116,47 @@ public class Boss extends FighterPlane {
 		return currentMove;
 	}
 	
+	/**
+	 * 
+	 * @return true if boss is to fire within the current frame; false otherwise
+	 */
 	private boolean bossFiresInCurrentFrame() {
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 	
+	/**
+	 * 
+	 * @return the boss' projectile's initial Y coordinate
+	 */
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 	
+	/**
+	 * @return true if boss; shield should be activated; false otherwise
+	 */
 	private boolean shieldShouldBeActivated() {
 		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
 	
+	/**
+	 * @return true if boss' shield has been activated for the maximum number of frames shield can
+	 * be activated; false otherwise
+	 */
 	private boolean shieldExhausted() {
 		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
 	}
 	
+	/**
+	 * Activates the boss' shield
+	 */
 	private void activateShield() {
 		isShielded = true;
 	}
 	
+	/**
+	 * Deactivates the boss' shield
+	 */
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
