@@ -1,6 +1,5 @@
 package view;
 
-import controller.ImageSetUp;
 import javafx.scene.image.ImageView;
 
 

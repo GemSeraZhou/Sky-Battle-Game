@@ -11,21 +11,52 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import levels.LevelParent;
 
+/**
+ * Controls the flow of Sky Battle
+ * 
+ * @author Stephen
+ *
+ */
 public class Controller implements Observer {
 
 	private static final String LEVEL_ONE_CLASS_NAME = "levels.LevelOne";
 	private final Stage stage;
 
+	/**
+	 * Creates an instance of Controller
+	 * @param stage: stage on which game will be displayed
+	 */
 	public Controller(Stage stage) {
 		this.stage = stage;
 	}
 
+	/**
+	 * Launches the Sky Battle game
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		stage.show();
 		goToLevel(LEVEL_ONE_CLASS_NAME);
 	}
 
+	/**
+	 * Uses reflection to go to the level specified by the parameter
+	 * @param className: name of the level to go to
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Class<?> myClass = Class.forName(className);

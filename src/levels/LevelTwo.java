@@ -1,13 +1,13 @@
 package levels;
 
 import actors.Boss;
-import controller.ImageSetUp;
 import javafx.scene.image.Image;
+import view.ImageSetUp;
 import view.LevelView;
 import view.LevelViewLevelTwo;
 
 /**
- * LevelTwo of Sky Battle 
+ * Level Two of Sky Battle 
  * 
  * @author Stephen
  *
