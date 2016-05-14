@@ -2,9 +2,9 @@ package levels;
 
 import actors.ActiveActorDestructible;
 import actors.EnemyPlane;
-import actors.UserPlane;
 import controller.ImageSetUp;
 import javafx.scene.image.Image;
+import view.LevelView;
 
 public class LevelOne extends LevelParent {
 	
@@ -20,18 +20,12 @@ public class LevelOne extends LevelParent {
 	}
 
 	@Override
-	protected void goToNextLevel() {
-		setChanged();
-		notifyObservers(NEXT_LEVEL);
-	}
-
-	@Override
 	protected void checkIfGameOver() {
-		UserPlane user = (UserPlane) getUser();
-		if (user.isDestroyed())
-			endGame();
-		else if (user.getNumberOfKills() >= KILLS_TO_ADVANCE)
-			goToNextLevel();
+		if (userIsDestroyed()) {
+			loseGame();
+		}
+		else if (userHasReachedKillTarget())
+			goToNextLevel(NEXT_LEVEL);
 	}
 
 	@Override
@@ -49,6 +43,15 @@ public class LevelOne extends LevelParent {
 				addEnemyUnit(newEnemy);
 			}
 		}
+	}
+
+	@Override
+	protected LevelView instantiateLevelView() {
+		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+	}
+	
+	private boolean userHasReachedKillTarget() {
+		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
 
 }
