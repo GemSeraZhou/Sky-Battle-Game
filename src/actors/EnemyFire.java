@@ -18,5 +18,10 @@ public class EnemyFire extends Projectile {
 		moveHorizontally(HORIZONTAL_VELOCITY);
 	}
 
+	@Override
+	public void updateActor() {
+		updatePosition();
+	}
+
 
 }

@@ -82,7 +82,7 @@ public abstract class LevelParent extends Observable {
 	
 	private void updateScene() {
 		spawnEnemyUnits();
-		updateActorPositions();
+		updateActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();
@@ -147,11 +147,11 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private void updateActorPositions() {
-		friendlyUnits.forEach(plane -> plane.updatePosition());
-		enemyUnits.forEach(enemy -> enemy.updatePosition());
-		userProjectiles.forEach(projectile -> projectile.updatePosition());
-		enemyProjectiles.forEach(projectile -> projectile.updatePosition());
+	private void updateActors() {
+		friendlyUnits.forEach(plane -> plane.updateActor());
+		enemyUnits.forEach(enemy -> enemy.updateActor());
+		userProjectiles.forEach(projectile -> projectile.updateActor());
+		enemyProjectiles.forEach(projectile -> projectile.updateActor());
 	}
 
 	private void removeAllDestroyedActors() {
