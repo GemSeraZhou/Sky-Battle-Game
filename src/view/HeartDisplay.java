@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
  */
 public class HeartDisplay {
 	
+	private static final String HEART_IMAGE_NAME = "/images/heart.png";
 	private static final int HEART_HEIGHT = 50;
 	private static final int INDEX_OF_FIRST_ITEM = 0;
 	private HBox container;
@@ -47,7 +49,7 @@ public class HeartDisplay {
 	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
-			ImageView heart = new ImageView(ImageSetUp.getImageList().get(ImageSetUp.getHeart()));
+			ImageView heart = new ImageView(new Image(HEART_IMAGE_NAME));
 			heart.setFitHeight(HEART_HEIGHT);
 			heart.setPreserveRatio(true);
 			container.getChildren().add(heart);

@@ -1,7 +1,5 @@
 package actors;
 
-import javafx.scene.image.Image;
-
 /**
  * Abstract class for all fighter planes in Sky Battle
  * 
@@ -14,14 +12,14 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	
 	/**
 	 * Creates an instance of a FighterPlane
-	 * @param image: image representing the plane
+	 * @param imageName: name of the image representing the plane
 	 * @param imageHeight: height of the plane's image
 	 * @param initialXPos: initial x position of the plane
 	 * @param initialYPos: initial y position of the plane
 	 * @param health: initial health of the plane
 	 */
-	public FighterPlane(Image image, int imageHeight, double initialXPos, double initialYPos, int health) {
-		super(image, imageHeight, initialXPos, initialYPos);
+	public FighterPlane(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
+		super(imageName, imageHeight, initialXPos, initialYPos);
 		this.health = health;
 	}
 

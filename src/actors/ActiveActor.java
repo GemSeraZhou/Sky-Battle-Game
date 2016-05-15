@@ -1,7 +1,6 @@
 package actors;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 
 /**
  * Actor for Sky Battle Game with the ability to change positions
@@ -12,15 +11,17 @@ import javafx.scene.image.ImageView;
 
 public abstract class ActiveActor extends ImageView {
 	
+	private static final String IMAGE_LOCATION = "/images/";
+	
 	/**
 	 * Creates an instance of an ActiveActor
-	 * @param image: the image representing the ActiveActor
+	 * @param imageName: the name of the image representing the ActiveActor
 	 * @param imageHeight: the height of the ActiveActor's image
 	 * @param initialXPos: the initial x coordinate of the ActiveActor
 	 * @param initialYPos: the initial y coordinate of the ActiveActor
 	 */
-	public ActiveActor(Image image, int imageHeight, double initialXPos, double initialYPos) {
-		this.setImage(image);
+	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+		this.setImage(new Image(IMAGE_LOCATION + imageName));
 		this.setLayoutX(initialXPos);
 		this.setLayoutY(initialYPos);
 		this.setFitHeight(imageHeight);

@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ImageSetUp;
 
 /**
  * Main class for Sky Battle
@@ -22,7 +21,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		ImageSetUp.initialize();
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);

@@ -1,7 +1,5 @@
 package actors;
 
-import javafx.scene.image.Image;
-
 /**
  * Actor for Sky Battle Game with ability to update its position, take damage, and be destroyed
  * 
@@ -14,13 +12,13 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	
 	/**
 	 * Creates an instance of ActiveActorDestructible
-	 * @param image: the image representing the ActiveActor
+	 * @param image: the name of the image representing the ActiveActorDestructible
 	 * @param imageHeight: the height of the ActiveActorDestructible's image
 	 * @param initialXPos: the initial x coordinate of the ActiveActorDestructible
 	 * @param initialYPos: the initial y coordinate of the ActiveActorDestructible
 	 */
-	public ActiveActorDestructible(Image image, int imageHeight, double initialXPos, double initialYPos) {
-		super(image, imageHeight, initialXPos, initialYPos);
+	public ActiveActorDestructible(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+		super(imageName, imageHeight, initialXPos, initialYPos);
 		isDestroyed = false;
 	}
 

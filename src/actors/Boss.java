@@ -2,9 +2,6 @@ package actors;
 
 import java.util.*;
 
-import javafx.scene.image.Image;
-import view.ImageSetUp;
-
 /**
  * 
  * The boss for Level Two of Sky Battle Game
@@ -14,7 +11,7 @@ import view.ImageSetUp;
  */
 public class Boss extends FighterPlane {
 
-	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBossPlane());
+	private static final String IMAGE_NAME = "bossplane.png";
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
@@ -39,7 +36,7 @@ public class Boss extends FighterPlane {
 	 * Creates an instance of Boss
 	 */
 	public Boss() {
-		super(IMAGE, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;

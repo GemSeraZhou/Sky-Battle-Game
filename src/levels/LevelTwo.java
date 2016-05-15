@@ -1,8 +1,6 @@
 package levels;
 
 import actors.Boss;
-import javafx.scene.image.Image;
-import view.ImageSetUp;
 import view.LevelView;
 import view.LevelViewLevelTwo;
 
@@ -14,8 +12,8 @@ import view.LevelViewLevelTwo;
  */
 public class LevelTwo extends LevelParent {
 
+	private static final String BACKGROUND_IMAGE_NAME = "/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-	private static final Image BACKGROUND_IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBackground1());
 	private final Boss boss;
 	private LevelViewLevelTwo levelView;
 	
@@ -25,7 +23,7 @@ public class LevelTwo extends LevelParent {
 	 * @param screenWidth: width of the screen
 	 */
 	public LevelTwo(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 		boss = new Boss();
 	}
 

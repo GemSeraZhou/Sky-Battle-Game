@@ -2,8 +2,6 @@ package levels;
 
 import actors.ActiveActorDestructible;
 import actors.EnemyPlane;
-import javafx.scene.image.Image;
-import view.ImageSetUp;
 import view.LevelView;
 
 /**
@@ -14,12 +12,12 @@ import view.LevelView;
  */
 public class LevelOne extends LevelParent {
 	
+	private static final String BACKGROUND_IMAGE_NAME = "/images/background1.jpg";
 	private static final String NEXT_LEVEL = "levels.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 100;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-	private static final Image BACKGROUND_IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getBackground1());
 
 	/**
 	 * Creates an instance of LevelOne
@@ -27,7 +25,7 @@ public class LevelOne extends LevelParent {
 	 * @param screenWidth: width of the screen
 	 */
 	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
 	@Override

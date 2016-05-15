@@ -1,8 +1,5 @@
 package actors;
 
-import javafx.scene.image.Image;
-import view.ImageSetUp;
-
 /**
  * User-Controlled fighter plane for Sky Battle
  * 
@@ -11,13 +8,13 @@ import view.ImageSetUp;
  */
 public class UserPlane extends FighterPlane {
 
+	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = -40;
 	private static final double Y_LOWER_BOUND = 600.0;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int VERTICAL_VELOCITY = 8;
-	private static final Image IMAGE = ImageSetUp.getImageList().get(ImageSetUp.getUserPlane());
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private int velocityMultiplier;
@@ -28,7 +25,7 @@ public class UserPlane extends FighterPlane {
 	 * @param initialHealth: initial health of the user
 	 */
 	public UserPlane(int initialHealth) {
-		super(IMAGE, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 	}
 	
