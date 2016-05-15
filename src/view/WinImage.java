@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
  */
 public class WinImage extends ImageView {
 	
+	private static final String IMAGE_NAME = "/images/youwin.png";
 	private static final int HEIGHT = 500;
 	private static final int WIDTH = 600;
 	
@@ -19,7 +21,7 @@ public class WinImage extends ImageView {
 	 * @param yPosition: y position of image
 	 */
 	public WinImage(double xPosition, double yPosition) {
-		this.setImage(ImageSetUp.getImageList().get(ImageSetUp.getYouWin()));
+		this.setImage(new Image(IMAGE_NAME));
 		this.setVisible(false);
 		this.setFitHeight(HEIGHT);
 		this.setFitWidth(WIDTH);

@@ -8,8 +8,14 @@ package actors;
  */
 public interface Destructible {
 
+	/**
+	 * Handles damage dealt to Destructible
+	 */
 	void takeDamage();
 	
+	/**
+	 * Destroys the Destructible
+	 */
 	void destroy();
 	
 }

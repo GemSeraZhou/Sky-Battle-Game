@@ -1,7 +1,5 @@
 package actors;
 
-import javafx.scene.image.Image;
-
 /**
  * Abstract class for all projectile in Sky Battle  
  * 
@@ -17,8 +15,8 @@ public abstract class Projectile extends ActiveActorDestructible {
 	 * @param initialXPos: initial x position of the projectile
 	 * @param initialYPos: initial y position of the projectile
 	 */
-	public Projectile(Image image, int imageHeight, double initialXPos, double initialYPos) {
-		super(image, imageHeight, initialXPos, initialYPos);
+	public Projectile(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+		super(imageName, imageHeight, initialXPos, initialYPos);
 	}
 
 	@Override

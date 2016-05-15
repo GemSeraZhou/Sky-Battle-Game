@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -10,13 +11,16 @@ import javafx.scene.image.ImageView;
  */
 public class GameOverImage extends ImageView {
 	
+	private static final String IMAGE_NAME = "/images/gameover.png";
+	
 	/**
 	 * Creates an instance of GameOverImage
 	 * @param xPosition: x position of the image
 	 * @param yPosition: y position of the image
 	 */
 	public GameOverImage(double xPosition, double yPosition) {
-		setImage(ImageSetUp.getImageList().get(ImageSetUp.getGameOver()));
+		setImage(new Image(IMAGE_NAME));
+//		setImage(ImageSetUp.getImageList().get(ImageSetUp.getGameOver()));
 		setLayoutX(xPosition);
 		setLayoutY(yPosition);
 	}

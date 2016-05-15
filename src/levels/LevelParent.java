@@ -40,12 +40,12 @@ public abstract class LevelParent extends Observable {
 
 	/**
 	 * Creates an instance of LevelParent
-	 * @param backgroundImage: background image for level
+	 * @param backgroundImageName: name of background image for level
 	 * @param screenHeight: height of the screen
 	 * @param screenWidth: width of the screen
 	 * @param playerInitialHealth: the user's initial number of lives
 	 */
-	public LevelParent(Image backgroundImage, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -54,7 +54,7 @@ public abstract class LevelParent extends Observable {
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
 		this.enemyProjectiles = new ArrayList<>();
-		this.background = new ImageView(backgroundImage);
+		this.background = new ImageView(new Image(backgroundImageName));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
